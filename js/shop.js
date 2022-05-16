@@ -1,6 +1,6 @@
 // If you have time, you can move this variable "products" to a json or js file and load the data in this js. It will look more professional
 var products = [
-   {
+    {
         id: 1,
         name: 'cooking oil',
         price: 10.5,
@@ -71,27 +71,69 @@ var cart = [];
 
 var total = 0;
 
+
 // Exercise 1
 function buy(id) {
-    // 1. Loop for to the array products to get the item to add to cart
+    // 1. Loop for to the array products to get the item to add to cart  
+    for (producto of products) {
+        if (producto.id == id) break;
+    }
+    //alert(producto.name);
+
     // 2. Add found product to the cartList array
+    cartList.push(producto);
 }
 
 // Exercise 2
 function cleanCart() {
-
+    // Vaciar Carrito
+    cartList.splice(0, cartList.length);
+    //console.dir(cartList);
 }
 
 // Exercise 3
 function calculateTotal() {
     // Calculate total price of the cart using the "cartList" array
+    total = 0;
+    for (producto of cartList) {
+        total += producto.price;
+    }
+    console.dir(cartList);
+    console.log(`Precio total del carrito es ${total}`);
 }
+
+
 
 // Exercise 4
 function generateCart() {
     // Using the "cartlist" array that contains all the items in the shopping cart, 
-    // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
+    // generate the "subtotalWithDiscount" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
+
+    var idAnt = 0;
+    var quantity = 1;
+    var subtotal = 0;
+    var subtotalWithDiscount = 0;
+
+    //Vaciar array cart actual
+    cart.splice(0, cart.length);
+
+    cartList = sortByKey(cartList, 'id');
+    for (producto of cartList) {
+        if (producto.id == idAnt) {
+            quantity++;
+        } else {
+            producto.quantity = quantity;
+            producto.subtotal = quantity * producto.price;
+            cart.push(producto);
+            quantity = 1;
+            idAnt = producto.id;
+        }
+    }
+    console.log(cartList);
+    console.log(cart);
 }
+
+
 
 // Exercise 5
 function applyPromotionsCart() {
@@ -119,7 +161,22 @@ function removeFromCart(id) {
     // 2. Add found product to the cartList array
 }
 
-function open_modal(){
-	console.log("Open Modal");
-	printCart();
+function open_modal() {
+    console.log("Open Modal");
+    printCart();
+}
+
+
+
+
+/**
+ * FUNCIONES
+ */
+
+function sortByKey(array, key) {
+    // Ordenar un array por la key
+    return array.sort(function (a, b) {
+        var x = a[key]; var y = b[key];
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    });
 }
