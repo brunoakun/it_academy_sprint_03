@@ -20,9 +20,9 @@ function validate() {
 	}
 
 	if (error > 0) {
-		alert("Error");
+//		alert("Error");
 	} else {
-		alert("OK");
+//		alert("OK");
 	}
 
 }

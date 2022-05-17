@@ -11,3 +11,4 @@ function buscaProducto(id) {
         return (false);
     }
 }
+
