@@ -70,7 +70,12 @@ var cartList = [];
 var cart = [];
 
 var total = 0;
+var countProduct = 0;      // Contador de productos en el carrito
 
+// DOM
+const count_product = document.getElementById("count_product");
+const cart_list = document.getElementById("cart_list");
+const total_price = document.getElementById("total_price");
 
 // Exercise 1
 function buy(id) {
@@ -81,6 +86,9 @@ function buy(id) {
 
     // 2. Add found product to the cartList array
     cartList.push(producto);
+    countProduct++;
+    count_product.innerHTML = countProduct;
+
     //alert(producto.name);
 }
 
@@ -88,6 +96,8 @@ function buy(id) {
 function cleanCart() {
     // Vaciar Carrito
     cartList.splice(0, cartList.length);
+    countProduct = 0;
+    count_product.innerHTML = countProduct;
 
     generateCart();
     printCart();
@@ -173,8 +183,6 @@ function printCart() {
         htmlChart += '  <td>$' + prodCart.subtotalWithDiscount.toFixed(2) + '</td>';
         htmlChart += '</tr>';
     }
-    const cart_list = document.getElementById("cart_list");
-    const total_price = document.getElementById("total_price");
     cart_list.innerHTML = htmlChart;
     total_price.innerHTML = total.toFixed(2);
 }
@@ -197,6 +205,7 @@ function removeFromCart(id) {
 
 function open_modal() {
     console.log("Open Modal");
+    generateCart();
     printCart();
 }
 
