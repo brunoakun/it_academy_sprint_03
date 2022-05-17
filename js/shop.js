@@ -78,10 +78,10 @@ function buy(id) {
     for (producto of products) {
         if (producto.id == id) break;
     }
-    //alert(producto.name);
 
     // 2. Add found product to the cartList array
     cartList.push(producto);
+    //alert(producto.name);
 }
 
 // Exercise 2
@@ -102,34 +102,31 @@ function calculateTotal() {
     console.log(`Precio total del carrito es ${total}`);
 }
 
-
-
 // Exercise 4
 function generateCart() {
     // Using the "cartlist" array that contains all the items in the shopping cart, 
     // generate the "subtotalWithDiscount" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
 
-    var idAnt = 0;
-    var quantity = 1;
-    var subtotal = 0;
-    var subtotalWithDiscount = 0;
+    cart.splice(0, cart.length);   //Vaciar array cart actual
 
-    //Vaciar array cart actual
-    cart.splice(0, cart.length);
+    for (let product of cartList) {
 
-    cartList = sortByKey(cartList, 'id');
-    for (producto of cartList) {
-        if (producto.id == idAnt) {
-            quantity++;
+        let existeIndex, existe = cart.find((item, index) => {
+            existeIndex = index;
+            return item.id == product.id;
+        });
+
+        if (existe) {
+            cart[existeIndex].quantity++;
         } else {
-            producto.quantity = quantity;
-            producto.subtotal = quantity * producto.price;
-            cart.push(producto);
-            quantity = 1;
-            idAnt = producto.id;
+            product.quantity = 1;
+            cart.push(product);
         }
     }
+
+    console.log('generateCart:\n cartList= ');
     console.log(cartList);
+    console.log('cart= ');
     console.log(cart);
 }
 
@@ -138,6 +135,21 @@ function generateCart() {
 // Exercise 5
 function applyPromotionsCart() {
     // Apply promotions to each item in the array "cart"
+    /*
+        Comprobar si el producto tiene oferta y calcular el descuento
+    */
+    generateCart();
+
+    for (prodCart of cart) {
+        if (prodCart.offer.number) {
+            if (prodCart.quantity >= prodCart.offer.number) {
+                prodCart.subtotalWithDiscount = prodCart.subtotal - (prodCart.subtotal * prodCart.offer.percent);
+            }
+        }
+    }
+
+    console.log('applyPromotionsCart:\n cart= ');
+    console.log(cart);
 }
 
 // Exercise 6
