@@ -88,7 +88,9 @@ function buy(id) {
 function cleanCart() {
     // Vaciar Carrito
     cartList.splice(0, cartList.length);
-    //console.dir(cartList);
+
+    generateCart();
+    printCart();
 }
 
 // Exercise 3
@@ -96,7 +98,7 @@ function calculateTotal() {
     // Calculate total price of the cart using the "cartList" array
     total = 0;
     for (producto of cartList) {
-        total += producto.price;
+        total += producto.subtotalWithDiscount;
     }
     console.dir(cartList);
     console.log(`Precio total del carrito es ${total}`);
@@ -118,16 +120,24 @@ function generateCart() {
 
         if (existe) {
             cart[existeIndex].quantity++;
+            product.subtotal = product.price * product.quantity;
+            product.subtotalWithDiscount = product.subtotal;
         } else {
             product.quantity = 1;
+            product.subtotal = product.price * product.quantity;
+            product.subtotalWithDiscount = product.subtotal;
             cart.push(product);
         }
     }
+    /*
+        console.log('generateCart:\n cartList= ');
+        console.log(cartList);
+        console.log('cart= ');
+        console.log(cart);
+        */
 
-    console.log('generateCart:\n cartList= ');
-    console.log(cartList);
-    console.log('cart= ');
-    console.log(cart);
+    applyPromotionsCart();
+    calculateTotal();
 }
 
 
@@ -138,12 +148,11 @@ function applyPromotionsCart() {
     /*
         Comprobar si el producto tiene oferta y calcular el descuento
     */
-    generateCart();
 
     for (prodCart of cart) {
-        if (prodCart.offer.number) {
+        if (typeof prodCart.offer != "undefined") {
             if (prodCart.quantity >= prodCart.offer.number) {
-                prodCart.subtotalWithDiscount = prodCart.subtotal - (prodCart.subtotal * prodCart.offer.percent);
+                prodCart.subtotalWithDiscount = (prodCart.subtotal - (prodCart.subtotal * prodCart.offer.percent / 100));
             }
         }
     }
@@ -155,6 +164,19 @@ function applyPromotionsCart() {
 // Exercise 6
 function printCart() {
     // Fill the shopping cart modal manipulating the shopping cart dom
+    var htmlChart = '';
+    for (prodCart of cart) {
+        htmlChart += '<tr>';
+        htmlChart += '  <th scope="row">' + prodCart.name + '</th>';
+        htmlChart += '  <td>$' + prodCart.price.toFixed(2) + '</td>';
+        htmlChart += '  <td>' + prodCart.quantity.toFixed(2) + '</td>';
+        htmlChart += '  <td>$' + prodCart.subtotalWithDiscount.toFixed(2) + '</td>';
+        htmlChart += '</tr>';
+    }
+    const cart_list = document.getElementById("cart_list");
+    const total_price = document.getElementById("total_price");
+    cart_list.innerHTML = htmlChart;
+    total_price.innerHTML = total.toFixed(2);
 }
 
 
