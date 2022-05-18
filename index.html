@@ -258,20 +258,29 @@
 							<tr>
 								<th scope="col">Product</th>
 								<th scope="col">Price</th>
+								<th scope="col"> </th>
 								<th scope="col">Qty.</th>
+								<th scope="col"> </th>
 								<th scope="col">Total <small>(with discount)</small></th>
 							</tr>
 						</thead>
 						<tbody id="cart_list">
-							 
+
 						</tbody>
 					</table>
 					<div class="text-center fs-3">
 						Total: $<span id="total_price"></span>
 					</div>
 					<div class="text-center">
-						<a href="checkout.html" class="btn btn-primary m-3">Checkout</a>
-						<a href="javascript:void(0)" onclick="cleanCart()" class="btn btn-primary m-3">Clean Cart</a>
+						<!--	
+						<a href="checkout.html" id="checkOut_btn" class="btn btn-primary m-3">Checkout</a>				
+						<a href="javascript:void(0)" id="cleanCart_btn" disabled onclick="cleanCart()" class="btn btn-primary m-3">Clean Cart</a>
+					-->
+						<button id="checkOut_btn" onclick="window.location.href='checkout.html'"
+							class="btn btn-primary m-3">Checkout</button>
+						<button id="cleanCart_btn" onclick="cleanCart()" class="btn btn-primary m-3">Clean
+							Cart</button>
+
 					</div>
 				</div>
 			</div>
