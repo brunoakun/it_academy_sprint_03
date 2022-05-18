@@ -194,12 +194,12 @@ function printCart() {
     var fonfoPromo = '';
     for (prodCart of cart) {
         fonfoPromo = '';
-        if (prodCart.promo) fonfoPromo = 'bg-info';
+        if (prodCart.promo) fonfoPromo = 'cssPromo';
         htmlChart += '<tr class="' + fonfoPromo + '">';
         htmlChart += '  <th scope="row">' + prodCart.name + '</th>';
         htmlChart += '  <td>$' + prodCart.price.toFixed(2) + '</td>';
         htmlChart += '  <td><button type="button" class="btn btn-warning btn-sm" onclick="restaCant(' + prodCart.id + ')">-</button></td>';
-        htmlChart += '  <td>' + prodCart.quantity.toFixed(2) + '</td>';
+        htmlChart += '  <td class="text-center">' + prodCart.quantity + '</td>';
         htmlChart += '  <td><button type="button" class="btn btn-warning btn-sm" onclick="sumaCant(' + prodCart.id + ')">+</button></td>';
         htmlChart += '  <td >$' + prodCart.subtotalWithDiscount.toFixed(2) + '</td>';
         htmlChart += '</tr>';
